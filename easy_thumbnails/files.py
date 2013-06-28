@@ -400,10 +400,13 @@ class Thumbnailer(File):
         else:
             names = (opaque_name, transparent_name)
         for filename in names:
-            if self.thumbnail_exists(filename):
-                return ThumbnailFile(
-                    name=filename, storage=self.thumbnail_storage,
-                    thumbnail_options=thumbnail_options)
+            try:
+                if self.thumbnail_exists(filename):
+                    return ThumbnailFile(
+                        name=filename, storage=self.thumbnail_storage,
+                        thumbnail_options=thumbnail_options)
+            except Exception, e:
+                pass
 
         if generate is None:
             generate = self.generate
@@ -458,6 +461,7 @@ class Thumbnailer(File):
             return False
         thumbnail = self.get_thumbnail_cache(thumbnail_name)
         if not thumbnail:
+            print '---------- THUMBNAIL DOESN\'T EXIST ----------'
             return False
         thumbnail_modtime = thumbnail.modified
         if self.thumbnail_high_resolution:

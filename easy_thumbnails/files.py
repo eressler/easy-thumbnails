@@ -461,7 +461,6 @@ class Thumbnailer(File):
             return False
         thumbnail = self.get_thumbnail_cache(thumbnail_name)
         if not thumbnail:
-            print '---------- THUMBNAIL DOESN\'T EXIST ----------'
             return False
         thumbnail_modtime = thumbnail.modified
         if self.thumbnail_high_resolution:
